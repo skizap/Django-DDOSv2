@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Project's CSS -->
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+    <title>DDOS Attack Script</title>
+    <script>
+
+        function Http(){
+            window.location.replace("http://www.google.com");
+        }
+
+
+    </script>
+  </head>
+  <body class="myBodyIndex">
+
+    <section class="jumbotron text-center myJumbotronIndex">
+        <div class="container">
+          <h1 class="jumbotron-heading">DDOS Saldırı Türleri</h1>
+          <p class="lead text-muted" style="color: black !important;">Bu script Django tabanlı olup üzerinde DDOS Saldırı yapmayan yarayan scriptlerin olduğu bir uygulamadır.
+          </p>
+        </div>
+      </section>
+
+    <div class="container" style="margin-bottom: 5%">
+
+        {% load static %}
+        <div class="row">
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-4">
+                <div class="card" style='width: 18rem;width: 100%;height: 200px;background-image: url({% static "image/background.png" %});'>
+                    <div class="card-body">
+                    <h1 class="card-title" style="text-align: center;color: azure;margin-top: 5%">HTTP Flood</h1>
+                    <a href="/Http_Flood" class="btn btn-warning" style="margin-top: 7%;width: 100%">Attack</a>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-4">
+                <div class="card" style='width: 18rem;width: 100%;height: 200px;background-image: url({% static "image/background.png" %});'>
+                    <div class="card-body">
+                    <h1 class="card-title" style="text-align: center;color: azure;margin-top: 5%">TCP Flood</h1>
+                    <a href="/Tcp_Flood" class="btn btn-warning" style="margin-top: 7%;width: 100%">Attack</a>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+
+        </div>
+
+        <div class="row" style="margin-top: 5%">
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-4">
+                <div class="card" style='width: 18rem;width: 100%;height: 200px;background-image: url({% static "image/background.png" %});'>
+                    <div class="card-body">
+                    <h1 class="card-title" style="text-align: center;color: azure;margin-top: 5%">UDP Flood</h1>
+                    <a href="/Udp_Flood" class="btn btn-warning" style="margin-top: 7%;width: 100%">Attack</a>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-4">
+                <div class="card" style='width: 18rem;width: 100%;height: 200px;background-image: url({% static "image/background.png" %});'>
+                    <div class="card-body">
+                    <h1 class="card-title" style="text-align: center;color: azure;margin-top: 5%">ICMP Flood</h1>
+                    <a href="/Icmp_Flood" class="btn btn-warning" style="margin-top: 7%;width: 100%">Attack</a>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+
+        </div>
+
+
+
+         <div class="row" style="margin-top: 5%">
+
+            <div class="col-md-1"></div>
+
+            <div class="col-md-4">
+                <div class="card" style='width: 18rem;width: 100%;height: 200px;background-image: url({% static "image/background.png" %});'>
+                    <div class="card-body">
+                    <h1 class="card-title" style="text-align: center;color: azure;margin-top: 5%">DNS Flood</h1>
+                    <a href="/Dns_Flood" class="btn btn-warning" style="margin-top: 7%;width: 100%">Attack</a>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-4"></div>
+
+            <div class="col-md-1"></div>
+
+
+        </div>
+
+
+    </div> <!-- container -->
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+/*ındex.html body kısmı*/
+.myBodyIndex{
+    background-color: seagreen;
+}
+/*index.html jumbotron kısmı*/
+.myJumbotronIndex{
+    padding: 2rem 2rem;
+    background-color: #fecc07
+}

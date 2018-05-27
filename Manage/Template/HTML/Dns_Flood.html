@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>DNS Flood</title>
+  </head>
+  <body>
+
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">DNS Flood</h1>
+          <p class="lead text-muted"></p>
+          <p>
+            <a href="/index" class="btn btn-primary my-2">Anasayfa</a>
+          </p>
+        </div>
+      </section>
+
+    <div class="container">
+
+        <div class="row">
+
+
+            <div class="col-md-3"></div>
+
+            <div class="col-md-6" style="margin-bottom: 5%">
+
+                <form action="/Dns_Flood/" method="post">
+                  {% csrf_token %}
+
+
+
+                  <div class="form-group">
+                    <label for="formGroupExampleInput1">Query'nin Göndereleceği Server</label>
+                    <input type="text" class="form-control" id="dst" name="dst" placeholder="IP Address">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2">Geçerli Bir Query Adı</label>
+                    <input class="form-control" type="text" name="qname" placeholder="Query" >
+
+                  </div>
+
+                  <div class="form-group">
+                    <select class="custom-select" name="qtype">
+                      <option selected>Sorgulanacak tür</option>
+                      <option value="A">A</option>
+                      <option value="AAAA">AAAA</option>
+                      <option value="ANY">ANY</option>
+                      <option value="ALL">ALL</option>
+                      <option value="NS">NS</option>
+                      <option value="MX">MX</option>
+                      <option value="TXT">TXT</option>
+                    </select>
+                  </div>
+
+
+                  <div class="form-group">
+                    <select class="custom-select" name="count">
+                      <option selected>Ne kadar Packet Gönderilecek</option>
+                      <option value="10">10</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                      <option value="500">500</option>
+                      <option value="1000">1.000</option>
+                      <option value="10000">10.000</option>
+                      <option value="100000">100.000</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-secondary" style="width: 100%">
+                      Başlat
+                  </button>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-3"></div>
+
+
+        </div> <!-- row -->
+
+        {% if request.method == "POST"%}
+            <script>
+                  alert("Saldırı başarı ile sonlandı");
+            </script>
+        {% endif %}
+
+    </div> <!-- container -->
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
