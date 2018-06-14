@@ -24,6 +24,5 @@ urlpatterns = [
     url(r'^Http_Flood/', views.Http_Flood),
     url(r'^Tcp_Flood/', views.Tcp_Flood),
     url(r'^Udp_Flood/', views.Udp_Flood),
-    url(r'^Icmp_Flood/', views.Icmp_Flood),
     url(r'^Dns_Flood/', views.Dns_Flood),
 ]

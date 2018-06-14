@@ -7,7 +7,6 @@ from Scripts.HTTP.httpFlood import HTTPFlood
 from Scripts.TCP.tcpFlood import TCPFlood
 from Scripts.UDP.udpFlood import UDPFlood
 from Scripts.DNS.dnsFLood import DNSFlood
-from Scripts.ICMP.icmpFlood import ICMPFlood
 
 from Scripts.PDF.createPDF import CreatePDF
 from Scripts.LIVE.isAlive import isAlive
@@ -24,12 +23,14 @@ def index(request):
 def Http_Flood(request):
     if request.method == "POST":
         dst     = request.POST["dst"]
-        port    = 80
-        flag    = "S"
-        method = request.POST["method"]
-        count   = request.POST["count"]
 
-    return render(request, "Http_Flood.html", {})
+        Attack = HTTPFlood(dst)
+        Attack.Main()
+
+        return render(request, "Http_Flood.html", {})
+    else:
+        return render(request, "Http_Flood.html", {})
+
 
 def Tcp_Flood(request):
     if request.method == "POST":
@@ -48,15 +49,6 @@ def Udp_Flood(request):
 
 
     return render(request, "Udp_Flood.html", {})
-
-
-def Icmp_Flood(request):
-    if request.method == "POST":
-        dst   = request.POST["dst"]
-        count = request.POST["count"]
-
-
-    return render(request,"Icmp_Flood.html")
 
 
 def Dns_Flood(request):
