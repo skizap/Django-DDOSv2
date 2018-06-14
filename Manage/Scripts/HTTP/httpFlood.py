@@ -42,7 +42,7 @@ class Alive():
 
 		while True and not ALLSTATUS:
 			try:
-				time.sleep(15)
+				time.sleep(10)
 				resp = requests.get(self.ask).text
 
 				if "is up." in resp:
@@ -102,6 +102,13 @@ class HTTPFlood():
 		return strftime("%y-%m-%d %H:%M:%S", gmtime())
 
 	def Main(self):
+		global ALLSTATUS , BANDWIDTHSIZE , TIME , PDFFlag
+		ALLSTATUS = False
+		BANDWIDTHSIZE = []
+		TIME = []
+		PDFFlag = True
+
+
 		print self.targetUrl
 
 		band  = Bandwidth("wlp3s0f0")
@@ -128,7 +135,7 @@ class HTTPFlood():
 
 		if PDFFlag:
 			"""
-			Eğer burası çalışırsa status'un içersine 0 yazılmamışdır.
+			Eğer burası çalışırsa status'un içersine 1 vardır ve
 			site down olup buraya girmiştir
 			"""
 			self.WritePDFContent()

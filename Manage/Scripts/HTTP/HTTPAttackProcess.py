@@ -20,6 +20,9 @@ class HTTP():
         self.proc3 = subprocess.Popen(self.COMAND3.split() , stdout=subprocess.PIPE , preexec_fn=os.setsid)
 
     def Terminate(self):
-        self.proc1.terminate()
-        self.proc2.terminate()
-        self.proc3.terminate()
+        #self.proc1.terminate()
+        #self.proc2.terminate()
+        #self.proc3.terminate()
+        os.kill(self.proc1.pid , 9)
+        os.kill(self.proc2.pid , 9)
+        os.kill(self.proc3.pid , 9)
