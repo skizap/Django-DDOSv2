@@ -93,9 +93,10 @@ class HTTPFlood():
 	def WritePDFContent(self):
 		with open(self.path+"/PDFContent.txt" , "a+") as file:
 			file.write("HTTP Flood\n")
-			file.write("Başlama Zamanı : {}\n".format( str(TIME[0]) ))
-			file.write("Bitiş Zamanı : {}\n".format( str(TIME[1]) ))
+			file.write("Baslama Zamani : {}\n".format( str(TIME[0]) ))
+			file.write("Bitis Zamani : {}\n".format( str(TIME[1]) ))
 			file.write("Bandwith : {}\n".format( str(max(BANDWIDTHSIZE)) ))
+			file.write("\n")
 
 	def ReturnTime(self):
 		return strftime("%y-%m-%d %H:%M:%S", gmtime())

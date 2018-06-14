@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^Tcp_Flood/', views.Tcp_Flood),
     url(r'^Udp_Flood/', views.Udp_Flood),
     url(r'^Dns_Flood/', views.Dns_Flood),
+    url(r'^Rapor_Olustur/', views.Rapor_Olustur),
 ]

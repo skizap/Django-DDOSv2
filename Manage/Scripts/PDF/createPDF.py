@@ -3,10 +3,11 @@
 from fpdf import FPDF
 import datetime
 import os.path , sys
-Path    = ""
 Header  = ""
 class PDF(FPDF):
     def header(self):
+        self.Path = os.path.dirname(__file__)
+
         # Arial bold 15
         self.set_font('Arial', 'B', 15)
         # Move to the right
@@ -16,7 +17,7 @@ class PDF(FPDF):
         # Line break
         self.ln(20)
         #Logo
-        self.image(Path+'/PDF/bga.png', 10, 8, 33)
+        self.image(self.Path+'/bga.png', 10, 8, 33)
 
     # Page footer
     def footer(self):
@@ -28,27 +29,22 @@ class PDF(FPDF):
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
 
-def CreatePDF(header,data):
-    #Burada bga.png yolu bulunamıyordu aşağıdaki 2 satır bunun çözümü
-    global Path
-    global Header
-    """
-        Header bilgisi Saldırıdan saldırıya değişiyor.Bu yüzden header createPDF'i çağıran
-        kişi tarafında alınıyor.Data bilgisi ise saldırıdan sonra hedef ayakta ise ona göre
-        hedef ayakta yada değil bilgisi veriyor bu bilgide CreatePDF class'ını çağıram tarafından
-        veriliyor
-    """
-    Header = header
-    Current = os.path.dirname(__file__)
-    Path = os.path.abspath(os.path.join(Current, os.pardir))
+def CreatePDF(Name):
 
     time = datetime.datetime.now()
-    tmp = str(time.year) + "." + str(time.month) + "." + str(time.day)+" "+Header+".pdf"
-
+    tmp = str(time.year) + "." + str(time.month) + "." + str(time.day)+" "+Name+".pdf"
+    arr = []
     pdf = PDF()
     pdf.alias_nb_pages()
     pdf.add_page()
     pdf.set_font('Times', '', 12)
-    for i in range(1):
-        pdf.cell(0, 10, str(data))
-    pdf.output(tmp, 'F')
+
+
+    path = os.path.dirname(__file__).rsplit("/Scripts/PDF")[0]
+    with open(path+"/PDFContent.txt" ,"r+") as file:
+        arr = file.readlines()
+
+    for i in arr:
+        pdf.multi_cell(0, 10, i, 0, 1)
+        pdf.ln(5)
+    pdf.output(Name, 'F')

@@ -61,3 +61,10 @@ def Dns_Flood(request):
 
     return render(request,"Dns_Flood.html")
 
+
+def Rapor_Olustur(request):
+    if request.method == "POST":
+        raporAd = request.POST["raporAd"]
+        CreatePDF(raporAd)
+    return render(request ,"Rapor_Olustur.html" , {})
+
