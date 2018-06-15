@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+import os
 
 from Scripts.HTTP.httpFlood import HTTPFlood
 from Scripts.TCP.tcpFlood import TCPFlood
@@ -67,4 +68,13 @@ def Rapor_Olustur(request):
         raporAd = request.POST["raporAd"]
         CreatePDF(raporAd)
     return render(request ,"Rapor_Olustur.html" , {})
+
+
+def Saldiri_Durumu(request):
+    if request.method == "POST":
+       with open(os.getcwd()+"/Manage/Status.txt" ,"r+") as file:
+            file.write("0")
+
+    return render(request ,"Saldiri_Durumu.html" , {})
+
 

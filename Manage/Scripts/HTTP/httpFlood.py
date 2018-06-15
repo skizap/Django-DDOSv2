@@ -16,18 +16,24 @@ PDFFlag = True
 class Bandwidth():
 	def __init__(self , interface):
 		self.path = "/sys/class/net/{}/statistics/tx_bytes".format(interface)
+		self.BandwitdArray = []
 		print "Bandwith"
 
 	def Read(self):
 		while True:
 			if ALLSTATUS:
+				self.BandwitdArray.reverse()
+				print self.BandwitdArray
+				for i in range(len(self.BandwitdArray )-1):
+					tmpBand = (self.BandwitdArray[i]-self.BandwitdArray[i+1]) / 128.0
+					BANDWIDTHSIZE.append(tmpBand)
 				break
 			else:
 				with open(self.path , "r") as file:
 					tmp = file.read()
-				BANDWIDTHSIZE.append(int(tmp) / 1024)
+				self.BandwitdArray.append(int(tmp) / 1024)
 
-				time.sleep(1)
+				time.sleep(1.5)
 
 class Alive():
 	def __init__(self,dst):
@@ -37,27 +43,19 @@ class Alive():
 		print self.ask
 
 	def isAlive(self):
-		global ALLSTATUS
-		global PDFFlag
-
 		while True and not ALLSTATUS:
 			try:
 				time.sleep(10)
 				resp = requests.get(self.ask).text
 
 				if "is up." in resp:
-					print "Site ayakta"
+					print "Site Up"
 
 				if "seems to be down!" in resp:
-					print "Site down"
-					ALLSTATUS = True
-					break
+					print "Site Down"
 
 			except:
 				print "ISUP'dan veri alırken urllib fonksiyonunda hata HATAA"
-				ALLSTATUS = True
-				PDFFlag = False
-				break
 
 class HTTPFlood():
 	def __init__(self,dst):
@@ -71,18 +69,17 @@ class HTTPFlood():
 
 		TIME.append(self.ReturnTime())
 
-		while True and not ALLSTATUS:
+		while True:
 			time.sleep(5)
 			with open(self.path+"/Status.txt" ,"r+") as file:
 				tmp = file.read()
 
 				if tmp == "1":
-					print "Status.txt -> 1"
+					print "Status.txt -> 1 <- Saldırı devam ediyor"
 
 				if tmp == "0":
-					print "Status.txt -> 0"
+					print "Status.txt -> 0 <- Saldırı durduruldu"
 					ALLSTATUS = True
-					PDFFlag = False
 					file.seek(0)
 					file.write("1")
 					break
@@ -91,14 +88,16 @@ class HTTPFlood():
 		TIME.append(self.ReturnTime())
 
 	def WritePDFContent(self):
+		#PDF Content'de saldırı sonuçlarını yazma
 		with open(self.path+"/PDFContent.txt" , "a+") as file:
 			file.write("HTTP Flood\n")
 			file.write("Baslama Zamani : {}\n".format( str(TIME[0]) ))
 			file.write("Bitis Zamani : {}\n".format( str(TIME[1]) ))
-			file.write("Bandwith : {}\n".format( str(max(BANDWIDTHSIZE)) ))
+			file.write("Bandwith : {}\n".format( str(max(BANDWIDTHSIZE))[:5] ))
 			file.write("\n")
 
 	def ReturnTime(self):
+		#Şimdiki Zamanı geriye döndürme
 		return strftime("%y-%m-%d %H:%M:%S", gmtime())
 
 	def Main(self):
@@ -114,8 +113,6 @@ class HTTPFlood():
 		band  = Bandwidth("wlp3s0f0")
 		alive = Alive(self.targetUrl)
 
-
-
 		t1 = Thread(target=self.ReadStatusFile)
 		t2 = Thread(target=band.Read)
 		t3 = Thread(target=alive.isAlive)
@@ -129,15 +126,10 @@ class HTTPFlood():
 		t1.join()
 		t2.join()
 		t3.join()
-
 		p1.Terminate()
 
 
 		if PDFFlag:
-			"""
-			Eğer burası çalışırsa status'un içersine 1 vardır ve
-			site down olup buraya girmiştir
-			"""
 			self.WritePDFContent()
 
 
