@@ -12,7 +12,6 @@ BANDWIDTHSIZE = []
 TIME = []
 PDFFlag = True
 
-
 class Bandwidth():
 	def __init__(self , interface):
 		self.path = "/sys/class/net/{}/statistics/tx_bytes".format(interface)
@@ -46,14 +45,12 @@ class Alive():
 		while True and not ALLSTATUS:
 			try:
 				time.sleep(10)
-				resp = requests.get(self.ask).text
-
-				if "is up." in resp:
+				#resp = requests.get(self.ask).text
+				resp = requests.get(self.orginal)
+				if resp.status_code == 200:
 					print "Site Up"
-
-				if "seems to be down!" in resp:
-					print "Site Down"
-
+				else:
+					print "Site down"
 			except:
 				print "ISUP'dan veri alırken urllib fonksiyonunda hata HATAA"
 
@@ -69,6 +66,8 @@ class HTTPFlood():
 
 		TIME.append(self.ReturnTime())
 
+		self.p1 = HTTP(self.targetUrl)
+		self.p1.Attack()
 		while True:
 			time.sleep(5)
 			with open(self.path+"/Status.txt" ,"r+") as file:
@@ -80,12 +79,13 @@ class HTTPFlood():
 				if tmp == "0":
 					print "Status.txt -> 0 <- Saldırı durduruldu"
 					ALLSTATUS = True
+					self.p1.Terminate()
 					file.seek(0)
 					file.write("1")
 					break
 
-
 		TIME.append(self.ReturnTime())
+		self.WritePDFContent()
 
 	def WritePDFContent(self):
 		#PDF Content'de saldırı sonuçlarını yazma
@@ -93,6 +93,7 @@ class HTTPFlood():
 			file.write("HTTP Flood\n")
 			file.write("Baslama Zamani : {}\n".format( str(TIME[0]) ))
 			file.write("Bitis Zamani : {}\n".format( str(TIME[1]) ))
+			time.sleep(2)
 			file.write("Bandwith : {}\n".format( str(max(BANDWIDTHSIZE))[:5] ))
 			file.write("\n")
 
@@ -105,31 +106,12 @@ class HTTPFlood():
 		ALLSTATUS = False
 		BANDWIDTHSIZE = []
 		TIME = []
-		PDFFlag = True
 
-
-		print self.targetUrl
-
-		band  = Bandwidth("wlp3s0f0")
+		band = Bandwidth("wlp3s0f0")
 		alive = Alive(self.targetUrl)
 
-		t1 = Thread(target=self.ReadStatusFile)
-		t2 = Thread(target=band.Read)
-		t3 = Thread(target=alive.isAlive)
-		p1 = HTTP(self.targetUrl)
+		self.t1 = Thread(target=self.ReadStatusFile)
+		self.t2 = Thread(target=band.Read)
 
-		t1.start()
-		t2.start()
-		t3.start()
-		p1.Attack()
-
-		t1.join()
-		t2.join()
-		t3.join()
-		p1.Terminate()
-
-
-		if PDFFlag:
-			self.WritePDFContent()
-
-
+		self.t1.start()
+		self.t2.start()

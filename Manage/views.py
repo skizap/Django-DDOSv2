@@ -10,8 +10,6 @@ from Scripts.UDP.udpFlood import UDPFlood
 from Scripts.DNS.dnsFLood import DNSFlood
 
 from Scripts.PDF.createPDF import CreatePDF
-from Scripts.LIVE.isAlive import isAlive
-from Scripts.RESOLVE.DomainResolve import Resolve
 
 
 
@@ -22,11 +20,17 @@ def index(request):
     return render( request , "index.html" , {})
 
 def Http_Flood(request):
-    if request.method == "POST":
-        dst     = request.POST["dst"]
 
+    if request.method == "POST":
+        dst = request.POST["dst"]
         Attack = HTTPFlood(dst)
-        Attack.Main()
+
+        if request.POST.get("startBut"):
+            Attack.Main()
+
+        if request.POST.get("stopBut"):
+            with open(os.getcwd() + "/Manage/Status.txt", "r+") as file:
+                file.write("0")
 
         return render(request, "Http_Flood.html", {})
     else:

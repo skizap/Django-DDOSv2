@@ -34,16 +34,14 @@
                 <form action="/Http_Flood/" method="post">
                   {% csrf_token %}
 
-
-
                   <div class="form-group">
                     <label for="formGroupExampleInput1">Hedef IP</label>
                     <input type="text" class="form-control" id="dst" name="dst" placeholder="Http işe başlayan url yada Ip adresi giriniz">
                   </div>
 
-                  <button type="submit" class="btn btn-secondary" style="width: 100%">
-                      Başlat
-                  </button>
+                  <input type="submit" class="btn btn-success" name="startBut" value="Başlat" style="width: 100%">
+
+                  <input type="submit" class="btn btn-warning" name="stopBut" value="Durdur" style="width: 100%;margin-top: 3%">
 
                 </form>
 
@@ -53,12 +51,6 @@
 
 
         </div> <!-- row -->
-
-        {% if request.method == "POST"%}
-            <script>
-                  alert("Saldırı başarı ile sonlandı");
-            </script>
-        {% endif %}
 
     </div> <!-- container -->
 
