@@ -5,6 +5,7 @@ import requests
 from threading import Thread
 from time import gmtime , strftime
 from HTTPAttackProcess import HTTP
+import subprocess
 
 
 ALLSTATUS = False
@@ -58,7 +59,7 @@ class HTTPFlood():
 	def __init__(self,dst):
 		self.targetUrl	 = dst
 		self.path = os.path.dirname(__file__).rsplit("/Scripts/HTTP")[0]
-
+		self.BashPath = os.path.dirname(__file__)
 	def ReadStatusFile(self):
 		global ALLSTATUS
 		global TIME
@@ -68,6 +69,8 @@ class HTTPFlood():
 
 		self.p1 = HTTP(self.targetUrl)
 		self.p1.Attack()
+
+
 		while True:
 			time.sleep(5)
 			with open(self.path+"/Status.txt" ,"r+") as file:
