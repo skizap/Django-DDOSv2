@@ -36,30 +36,28 @@ class Bandwidth():
 				time.sleep(1.5)
 
 class Alive():
-	def __init__(self,dst):
-		self.orginal = dst
-		self.url = dst.replace("https://","").replace("http://","").replace("www.","").replace("/","")
-		self.ask = "https://isitup.org/{}".format(self.url)
-		print self.ask
+	@staticmethod
+	def isAlive():
+		#./DOSS kısmı yolunu alır
+		path = os.getcwd()
+		with open(path+"/results.txt" , "a+") as result:
+			tmp = result.readlines()
 
-	def isAlive(self):
-		while True and not ALLSTATUS:
-			try:
-				time.sleep(10)
-				#resp = requests.get(self.ask).text
-				resp = requests.get(self.orginal)
-				if resp.status_code == 200:
-					print "Site Up"
-				else:
-					print "Site down"
-			except:
-				print "ISUP'dan veri alırken urllib fonksiyonunda hata HATAA"
+		status = ""
+		for i in tmp:
+			status+=(i[-4])
+		os.remove(path+"/results.txt")
+		os.remove(path+"/isitup_results.txt")
+		return status
+
+
 
 class HTTPFlood():
 	def __init__(self,dst):
 		self.targetUrl	 = dst
 		self.path = os.path.dirname(__file__).rsplit("/Scripts/HTTP")[0]
 		self.BashPath = os.path.dirname(__file__)
+
 	def ReadStatusFile(self):
 		global ALLSTATUS
 		global TIME
@@ -83,6 +81,7 @@ class HTTPFlood():
 					print "Status.txt -> 0 <- Saldırı durduruldu"
 					ALLSTATUS = True
 					self.p1.Terminate()
+
 					file.seek(0)
 					file.write("1")
 					break
@@ -97,6 +96,7 @@ class HTTPFlood():
 			file.write("Baslama Zamani : {}\n".format( str(TIME[0]) ))
 			file.write("Bitis Zamani : {}\n".format( str(TIME[1]) ))
 			time.sleep(2)
+			file.write("Status Code : {}\n".format( Alive.isAlive() ))
 			file.write("Bandwith : {}\n".format( str(max(BANDWIDTHSIZE))[:5] ))
 			file.write("\n")
 
@@ -111,7 +111,6 @@ class HTTPFlood():
 		TIME = []
 
 		band = Bandwidth("wlp3s0f0")
-		alive = Alive(self.targetUrl)
 
 		self.t1 = Thread(target=self.ReadStatusFile)
 		self.t2 = Thread(target=band.Read)
